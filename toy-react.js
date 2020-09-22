@@ -11,7 +11,7 @@ class ElementWrapper{
 
     appendChild(component){
         let range = document.createRange();
-        range.setStart(this.root,0);
+        range.setStart(this.root,this.root.childNodes.length);
         range.setEnd(this.root,this.root.childNodes.length);
         component[RENDER_TO_DOM](range);
     }
@@ -49,13 +49,6 @@ export class Component{
     [RENDER_TO_DOM](range){
         this.render()[RENDER_TO_DOM](range);
     }
-
-    get root(){
-        if(!this._root){
-            this._root = this.render().root;
-        }
-        return this._root;
-    }
 }
 
 export function createElement(type, attributes, ...children){
@@ -81,7 +74,10 @@ export function createElement(type, attributes, ...children){
             }else e.appendChild(child);
         }
     }
-    if(children) insertChild(children)
+    if(children) {
+        console.log(children);
+        insertChild(children);
+    }
     return e;
 }
 
